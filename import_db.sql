@@ -66,6 +66,7 @@ INSERT INTO
   questions (title, body, user_id)
 VALUES
   ('What is love?', 'baby don''t hurt me', (SELECT id FROM users WHERE fname = 'Nestor' AND lname = 'Haddaway')),
+  ('What''s the question?', 'This is', (SELECT id FROM users WHERE fname = 'Nestor' AND lname = 'Haddaway')),
   ('To be or not to be?', 'that is the question', (SELECT id FROM users WHERE fname = 'Alexander' AND lname = 'Supertramp'));
 
 INSERT INTO
