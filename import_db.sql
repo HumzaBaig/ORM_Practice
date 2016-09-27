@@ -20,6 +20,7 @@ CREATE TABLE questions (
 DROP TABLE IF EXISTS question_follows;
 
 CREATE TABLE question_follows (
+  id INTEGER PRIMARY KEY,
   user_id INTEGER NOT NULL,
   question_id INTEGER NOT NULL,
 
