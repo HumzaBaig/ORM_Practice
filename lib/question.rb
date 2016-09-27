@@ -3,9 +3,11 @@ require_relative 'reply'
 require_relative 'user'
 require_relative 'question_follow'
 require_relative 'question_like'
+require_relative 'model_base'
 
-class Question
+class Question < ModelBase
   attr_accessor :title, :body, :user_id
+  TABLE_NAME = 'questions'
 
   def self.find_by_author_id(author_id)
     questions = QuestionDBConnection.instance.execute(<<-SQL, author_id)

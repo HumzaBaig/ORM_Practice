@@ -1,9 +1,12 @@
 require_relative 'questions_db'
 require_relative 'user'
 require_relative 'question'
+require_relative 'model_base'
 
-class Reply
+class Reply < ModelBase
   attr_accessor :body, :parent_id, :question_id, :user_id
+  TABLE_NAME = 'replies'
+
 
   def self.find_by_user_id(user_id)
     replies = QuestionDBConnection.instance.execute(<<-SQL, user_id)
