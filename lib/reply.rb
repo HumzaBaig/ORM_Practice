@@ -33,6 +33,10 @@ class Reply
     @body = options['body']
   end
 
+  def save
+    @id ? update : create
+  end
+
   def create
     raise "#{self} already in database" if @id
     QuestionDBConnection.instance.execute(<<-SQL, @parent_id, @question_id, @user_id, @body)

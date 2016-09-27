@@ -23,6 +23,10 @@ class User
     @lname = options['lname']
   end
 
+  def save
+    @id ? update : create
+  end
+
   def create
     raise "#{self} already in database" if @id
     QuestionDBConnection.instance.execute(<<-SQL, @fname, @lname)

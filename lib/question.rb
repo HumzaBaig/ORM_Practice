@@ -32,6 +32,10 @@ class Question
     @user_id = options['user_id']
   end
 
+  def save
+    @id ? update : create
+  end
+
   def create
     raise "#{self} already in database" if @id
     QuestionDBConnection.instance.execute(<<-SQL, @title, @body, @user_id)
