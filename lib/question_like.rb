@@ -1,4 +1,4 @@
-require_relative 'question_db.rb'
+require_relative 'questions_db.rb'
 
 class QuestionLike
   attr_accessor :user_id, :question_id
