@@ -73,6 +73,8 @@ INSERT INTO
 VALUES
   ((SELECT id FROM users WHERE fname = 'Willy' AND lname = 'Wonka'),
     (SELECT id FROM questions WHERE title = 'What is love?')),
+  ((SELECT id FROM users WHERE fname = 'Alexander' AND lname = 'Supertramp'),
+    (SELECT id FROM questions WHERE title = 'What is love?')),
   ((SELECT id FROM users WHERE fname = 'Nestor' AND lname = 'Haddaway'),
     (SELECT id FROM questions WHERE title = 'To be or not to be?'));
 
