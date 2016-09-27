@@ -33,6 +33,29 @@ class Reply
     @body = options['body']
   end
 
+  def create
+    raise "#{self} already in database" if @id
+    QuestionDBConnection.instance.execute(<<-SQL, @parent_id, @question_id, @user_id, @body)
+      INSERT INTO
+        users (parent_id, question_id, user_id, body)
+      VALUES
+        (?, ?, ?, ?)
+    SQL
+    @id = QuestionDBConnection.instance.last_insert_row_id
+  end
+
+  def update
+    raise "#{self} not in database" unless @id
+    PlayDBConnection.instance.execute(<<-SQL, @parent_id, @question_id, @user_id, @body, @id)
+      UPDATE
+        replies
+      SET
+        parent_id = ?, question_id = ?, user_id = ?, body = ?
+      WHERE
+        id = ?
+    SQL
+  end
+
   def author
     author = QuestionDBConnection.instance.execute(<<-SQL, @user_id)
       SELECT *
