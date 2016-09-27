@@ -2,6 +2,7 @@ require_relative 'questions_db'
 require_relative 'question'
 require_relative 'reply'
 require_relative 'question_follow'
+require_relative 'question_like'
 
 class User
   attr_accessor :fname, :lname
@@ -34,4 +35,7 @@ class User
     QuestionFollow.questions_for_user_id(@id)
   end
 
+  def liked_questions
+    QuestionLike.liked_questions_for_user_id(@id)
+  end
 end

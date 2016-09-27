@@ -2,6 +2,7 @@ require_relative 'questions_db.rb'
 require_relative 'reply'
 require_relative 'user'
 require_relative 'question_follow'
+require_relative 'question_like'
 
 class Question
   attr_accessor :title, :body, :user_id
@@ -42,6 +43,14 @@ class Question
 
   def followers
     QuestionFollow.followers_for_question_id(@id)
+  end
+
+  def likers
+    QuestionLike.likers_for_question_id(@id)
+  end
+
+  def num_likes
+    QuestionLike.num_likes_for_question_id(@id)
   end
 
 end
