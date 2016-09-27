@@ -90,4 +90,8 @@ INSERT INTO
   question_likes (user_id, question_id)
 VALUES
 ((SELECT id FROM users WHERE fname = 'Sir' AND lname = 'Likealot'),
-  (SELECT id FROM questions WHERE title = 'What is love?'));
+  (SELECT id FROM questions WHERE title = 'What is love?')),
+((SELECT id FROM users WHERE fname = 'Sir' AND lname = 'Likealot'),
+  (SELECT id FROM questions WHERE title = 'To be or not to be?')),
+((SELECT id FROM users WHERE fname = 'Nestor' AND lname = 'Haddaway'),
+  (SELECT id FROM questions WHERE title = 'To be or not to be?'));
