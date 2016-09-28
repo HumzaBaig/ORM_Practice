@@ -30,11 +30,9 @@ class ModelBase
 
   def create
     raise "#{self} already in database" if @id
-
-
-    QuestionDBConnection.instance.execute(<<-SQL, *self.instance_variables)
+    QuestionDBConnection.instance.execute(<<-SQL, *get_instance_vars)
       INSERT INTO
-        #{self::TABLE_NAME} (#{get_instance_var_names.join(', ')})
+        #{self.class::TABLE_NAME} (#{get_instance_var_names.join(', ')})
       VALUES
         (#{get_escapes})
     SQL
@@ -44,14 +42,22 @@ class ModelBase
   def update
     raise "#{self} not in database" unless @id
 
-    QuestionDBConnection.instance.execute(<<-SQL, *self.instance_variables)
+    QuestionDBConnection.instance.execute(<<-SQL, *get_instance_vars)
       UPDATE
-        #{self::TABLE_NAME}
+        #{self.class::TABLE_NAME}
       SET
         #{get_instance_var_names.join(' = ?, ')}
       WHERE
         id = ?
     SQL
+  end
+
+  def get_instance_vars
+    vars = []
+    self.instance_variables.drop(1).each do |var|
+      vars << self.send(var.to_s[1..-1])
+    end
+    vars
   end
 
   def get_instance_var_names
@@ -60,7 +66,7 @@ class ModelBase
 
   def get_escapes
     escapes = []
-    self.instance_variables.length.times { escapes << "?"}
+    self.instance_variables.drop(1).length.times { escapes << "?"}
     escapes = escapes.join(', ')
   end
 
