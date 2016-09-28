@@ -25,33 +25,6 @@ class User < ModelBase
     @lname = options['lname']
   end
 
-  def save
-    @id ? update : create
-  end
-
-  def create
-    raise "#{self} already in database" if @id
-    QuestionDBConnection.instance.execute(<<-SQL, @fname, @lname)
-      INSERT INTO
-        users (fname, lname)
-      VALUES
-        (?, ?)
-    SQL
-    @id = QuestionDBConnection.instance.last_insert_row_id
-  end
-
-  def update
-    raise "#{self} not in database" unless @id
-    PlayDBConnection.instance.execute(<<-SQL, @fname, @lname, @id)
-      UPDATE
-        users
-      SET
-        fname = ?, lname = ?
-      WHERE
-        id = ?
-    SQL
-  end
-
   def authored_questions
     Question.find_by_author_id(@id)
   end
